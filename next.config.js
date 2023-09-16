@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+    images: {
+        domains: ["ik.imagekit.io","assets.coingecko.com"],
+    },
+}
 
 module.exports = nextConfig
