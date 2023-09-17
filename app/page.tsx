@@ -1,26 +1,58 @@
 "use client"
-
 import Coins from "@/components/CoinMarkets"
-import useSWR from 'swr'
+import {useData} from '@/hooks/useData'
 
-
-async function fetcher (url:string){
-  const res = await fetch(url)
-  if(!res.ok){
-    throw new Error('Network response failed')
-  }
-  return res.json()
-}
 
 export default function Home() {
+  const { data, error, isLoading } = useData()
 
-  const apiUrl = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en'
+  if(error){ 
+    return ( 
+    <div className="text-center h-screen text-2xl p-10 text-[#f59e0b]">Oops! <br></br> Error loading data</div>
+    ) 
+  }
 
-  const { data, error } = useSWR(apiUrl, fetcher)
-
-  if(error){ return ( <div>Error loading data</div>) }
-
-  if(!data){ return ( <div>Loading... </div>) }
+  if(isLoading){ 
+  return (  
+  <div className="p-10 flex flex-col overflow-x-auto">
+  <div className="sm:-mx-6 lg:-mx-8">
+    <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+      <div className="overflow-x-auto">
+        <table className="min-w-full text-left text-sm font-light animate-pulse">
+          {/* Skeleton loading rows */}
+          <thead className="border-b font-medium dark:border-neutral-200 animate-pulse">
+            <tr>
+              <th className="px-6 py-4"></th>
+              <th className="px-6 py-4"></th>
+              <th className="px-6 py-4"></th>
+              <th className="px-6 py-4"></th>
+              <th className="px-6 py-4"></th>
+              <th className="px-6 py-4"></th>
+              <th className="px-6 py-4"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* Render skeleton loading rows */}
+            {[1, 2, 3, 4, 5,6,7,8,9,10,11].map((_, index) => (
+              <tr
+                className="border-b dark:border-neutral-200 animate-pulse "
+                key={index}
+              >
+                <td className="whitespace-nowrap text-neutral-300 px-6 py-4">Loading</td>
+                <td className="whitespace-nowrap text-neutral-300 px-6 py-4">Loading</td>
+                <td className="whitespace-nowrap text-neutral-300 px-1 py-4">Loading</td>
+                <td className="whitespace-nowrap text-neutral-300 px-6 py-4">Loading</td>
+                <td className="whitespace-nowrap text-neutral-300 px-6 py-4">Loading</td>
+                <td className="whitespace-nowrap text-neutral-300 px-6 py-4">Loading</td>
+                <td className="whitespace-nowrap text-neutral-300 px-6 py-4">Loading</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>) }
 
 
   return (
