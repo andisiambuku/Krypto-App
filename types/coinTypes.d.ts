@@ -26,3 +26,13 @@ type CoinMarkets ={
     "roi": null,
     "last_updated": string
 }
+
+type CoinSearch = {
+    "id": string,
+    "name": string,
+    "api_symbol":string,
+    "symbol": string,
+    "market_cap_rank": number,
+    "thumb": string,
+    "large": string
+}

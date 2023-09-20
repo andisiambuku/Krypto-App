@@ -42,8 +42,8 @@ export default function Coins({ coin }: Props){
                             <tr className="border-b dark:border-neutral-200" key={coin.id} >
                                 <td className="whitespace-nowrap px-6 py-4">{coin.market_cap_rank}</td>
                                 <td className="whitespace-nowrap px-6 py-4"><Image src={coin.image || alt} alt={"coin image"} width={30} height={30}/></td>
-                                <Link href={`/coins/${coin.id}`}><td className="whitespace-nowrap px-1 py-4">{coin.name}</td>
-                                <td className="whitespace-nowrap text-neutral-500 px-6 py-4">{coin.symbol}</td></Link>
+                                <td className="whitespace-nowrap px-6 py-4"><Link href={`/coins/${coin.id}`}>{coin.name}{' '}
+                                <span className="text-neutral-500">{coin.symbol}</span></Link></td>
                                 <td className="whitespace-nowrap px-6 py-4">$ {coin.current_price.toLocaleString()}</td>
                                 <td className="whitespace-nowrap px-6 py-4">$ {coin.market_cap.toLocaleString()}</td>
                                 <td className="whitespace-nowrap px-6 py-4">$ {coin.total_volume.toLocaleString()}</td>
