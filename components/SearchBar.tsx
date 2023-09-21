@@ -1,21 +1,12 @@
 "use client"
 
+import { CoinSearch, SearchResponse } from '@/types/coinTypes';
 import React, { useState } from 'react';
-import fetcher from '@/lib/fetcher';
 
-interface CoinSearch {
-  id: string;
-  name: string;
-  api_symbol: string;
-  symbol: string;
-  market_cap_rank: number;
-  thumb: string;
-  large: string;
-}
 
 export default function SearchBar() {
   const [query, setQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<CoinSearch[]>([]);
+  const [searchResults, setSearchResults] = useState<SearchResponse>();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -34,7 +25,7 @@ export default function SearchBar() {
         // Check if the response is valid JSON
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
-          const searchData: CoinSearch[] = await response.json();
+          const searchData: SearchResponse = await response.json();
           setSearchResults(searchData);
         } else {
           throw new Error('Response is not valid JSON');
@@ -45,10 +36,10 @@ export default function SearchBar() {
       // Handle errors, e.g., display an error message to the user
     }
   };
-  
+  console.log(searchResults)
 
   return (
-    <div className="ml-5 flex w-[30%] items-center justify-between">
+    <div className="ml-5 flex w-[30%] items-center justify-between relative">
       <input
         type="search"
         className="relative m-0 block w-[1px] min-w-0 flex-auto  border border-solid border-[#f59e0b] bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6]  outline-none transition duration-200 ease-in-out"
@@ -80,22 +71,22 @@ export default function SearchBar() {
         </svg>
       </button>
       {/* Display search results */}
-      {searchResults.length > 0 && (
-        <div className="">
+      {searchResults?.coins != null && searchResults?.coins.length> 0 && (
+        <div style={{position:'absolute', top: '120px',height:'250px',overflow:'scroll',background:'white',zIndex:2, width:'300px'}} className="">
           <ul>
-            {searchResults.map((result: CoinSearch) => (
-              <>
-              <li key={result.id}>{result.thumb}</li>
-              <li>{result.name}</li>
-              <li>{result.api_symbol}</li>
-              <li>{result.market_cap_rank}</li>
-              </>
+            {searchResults?.coins.map((result: CoinSearch) => (
+              <li key={result.id}>
+                <div>{result.api_symbol}</div>
+                <div>{result.name}</div>
+                <div>{result.market_cap_rank}</div>
+                <div>{result.thumb}</div> 
+               </li>
             ))}
           </ul>
         </div>
-      )}
+       )}
     </div>
   );
 }
-
+//TODO add image tags to search results, ind a way to unmount the search bar after you clear results
 
