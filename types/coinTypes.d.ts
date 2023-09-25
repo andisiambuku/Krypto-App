@@ -27,7 +27,8 @@ type CoinMarkets ={
     "last_updated": string
 }
 
-type CoinSearch = {
+export type CoinSearch = {
+    
     "id": string,
     "name": string,
     "api_symbol":string,
@@ -35,4 +36,10 @@ type CoinSearch = {
     "market_cap_rank": number,
     "thumb": string,
     "large": string
+}
+export type SearchResponse = {
+    categories: [],
+    coins: CoinSearch[],
+    ico:[],
+    nfts:[]
 }
