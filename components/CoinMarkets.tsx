@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import alt from '@/assets/alt coin.jpg'
-import { CoinMarkets } from '@/types/coinTypes'
+import { CoinMarkets } from '@/types/coinMarkets'
 
 interface Coins {
     id: string,
