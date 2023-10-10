@@ -23,7 +23,7 @@ export async function CoinPage({ promise }: { promise: Promise<CoinDetails> }) {
                   <li><span className="font-semibold py-2 mr-5">Market Cap Change (24h):</span> {details.market_data.market_cap_change_percentage_24h.toFixed(1)}%</li>
                 </ul>
                 <ul className="py-1">
-                  <li><span className="font-semibold py-2 mr-5">Maximum Supply:</span> ${details.market_data.max_supply.toLocaleString()}</li>
+                  <li><span className="font-semibold py-2 mr-5">Maximum Supply:</span> ${details.market_data.max_supply?.toLocaleString() || 'N/A'}</li>
                   <li><span className="font-semibold py-2 mr-5">Price Change Percentage (24h):</span> {details.market_data.price_change_percentage_24h.toFixed(1)}%</li>
                   <li><span className="font-semibold py-2 mr-5">Total Supply:</span> ${details.market_data.total_supply.toLocaleString()}</li>
                   <li><span className="font-semibold py-2 mr-5">Total Volume:</span> ${details.market_data.total_volume.usd.toLocaleString()}</li>
