@@ -1,6 +1,6 @@
 "use client"
 
-import { CoinSearch, SearchResponse } from '@/types/coinTypes';
+import { CoinSearch, SearchResponse } from '@/types/coinMarkets';
 import React, { useState } from 'react';
 import Image from 'next/image'
 import alt from '@/assets/alt coin.jpg'
@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 export default function SearchBar() {
   const [query, setQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<SearchResponse>();
+  const [searchResults, setSearchResults] = useState<SearchResponse | undefined>();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -43,6 +43,9 @@ export default function SearchBar() {
     }
   };
   
+  const handleResultItemClick = () =>{
+    setSearchResults(undefined)
+  }
 
   return (
     <div className="ml-5 flex w-[30%] items-center justify-between relative">
@@ -81,7 +84,7 @@ export default function SearchBar() {
         <div style={{position:'absolute', top: '45px',height:'250px',overflow:'scroll',background:'white',zIndex:2, width:'365px'}} className="">
           <ul>
             {searchResults?.coins.map((result: CoinSearch) => (
-              <li key={result.id} className="flex items-center p-3">
+              <li key={result.id} onClick={handleResultItemClick} className="flex items-center p-3">
                 <div className="p-1"><Image src={result.thumb || alt} alt={"coin image"} width={30} height={30}/></div>
                 <div className="p-1 text-neutral-500"><Link href={`/coins/${result.id}`}>{result.name}</Link></div>
                 <div className="ml-auto text-neutral-500 text-xs">#{result.market_cap_rank}</div>
