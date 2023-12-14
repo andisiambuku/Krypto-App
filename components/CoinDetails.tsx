@@ -38,7 +38,8 @@ export async function CoinPage({ promise }: { promise: Promise<CoinDetails> }) {
                 <li className="py-1"><span className="font-semibold mr-5">Community Score:</span> {details.community_score}%</li>
                 <li className="py-1"><span className="font-semibold mr-5"><a href={details.links.homepage[0]} className=" hover:underline" target="_blank" rel="noopener noreferrer">
                   Website: {details.name}.org </a></span> </li>
-                <li className="py-1"><span className="font-semibold mr-5"> Public Interest Score:</span> {details.public_interest_score.toFixed(1)}%</li>
+                
+                
               </ul>
             </div>
           </div>
