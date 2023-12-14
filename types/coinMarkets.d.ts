@@ -1,4 +1,4 @@
-type CoinMarkets ={
+export type CoinMarkets = {
     'id': string,
     "symbol": string,
     "name": string,
