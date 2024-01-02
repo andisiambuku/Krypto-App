@@ -1,51 +1,56 @@
-"use client"
+"use client";
 
-import { CoinSearch, SearchResponse } from '@/types/coinMarkets';
-import React, { useState } from 'react';
-import Image from 'next/image'
-import alt from '@/assets/alt coin.jpg'
-import Link from 'next/link';
-
+import { CoinSearch, SearchResponse } from "@/types/coinMarkets";
+import React, { useState } from "react";
+import Image from "next/image";
+import alt from "@/assets/alt coin.jpg";
+import Link from "next/link";
 
 export default function SearchBar() {
-  const [query, setQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<SearchResponse | undefined>();
+  const [query, setQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<
+    SearchResponse | undefined
+  >();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
-    if (e.target.value.trim() === '') {
+    if (e.target.value.trim() === "") {
       setSearchResults(undefined);
     }
   };
 
   const handleSearchClick = async () => {
     try {
-      if (query.trim() !== '') {
-        const apiUrl = `https://api.coingecko.com/api/v3/search?query=${encodeURIComponent(query)}`;
+      if (query.trim() !== "") {
+        const apiUrl = `https://api.coingecko.com/api/v3/search?query=${encodeURIComponent(
+          query
+        )}`;
         const response = await fetch(apiUrl);
-  
+
         if (!response.ok) {
-          throw new Error(`Network response was not ok (status: ${response.status})`);
+          throw new Error(
+            `Network response was not ok (status: ${response.status})`
+          );
         }
-  
+
         // Check if the response is valid JSON
-        const contentType = response.headers.get('content-type');
-        if (contentType && contentType.includes('application/json')) {
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
           const searchData: SearchResponse = await response.json();
           setSearchResults(searchData);
         } else {
-          throw new Error('Response is not valid JSON');
+          throw new Error("Response is not valid JSON");
         }
       }
     } catch (error) {
-      console.error('Error during search:', error);
+      console.error("Error during search:", error);
       // Handle errors, e.g., display an error message to the user
     }
   };
-  
-  const handleResultItemClick = () =>{
-    setSearchResults(undefined)
-  }
+
+  const handleResultItemClick = () => {
+    setSearchResults(undefined);
+  };
 
   return (
     <div className="ml-5 flex w-[30%] items-center justify-between relative">
@@ -80,20 +85,45 @@ export default function SearchBar() {
         </svg>
       </button>
       {/* Display search results */}
-      {searchResults?.coins != null && searchResults?.coins.length> 0 && (
-        <div style={{position:'absolute', top: '45px',height:'250px',overflow:'scroll',background:'white',zIndex:2, width:'365px'}} className="">
+      {searchResults?.coins != null && searchResults?.coins.length > 0 && (
+        <div
+          style={{
+            position: "absolute",
+            top: "45px",
+            height: "250px",
+            overflow: "scroll",
+            background: "white",
+            zIndex: 2,
+            width: "365px",
+          }}
+          className=""
+        >
           <ul>
             {searchResults?.coins.map((result: CoinSearch) => (
-              <li key={result.id} onClick={handleResultItemClick} className="flex items-center p-3">
-                <div className="p-1"><Image src={result.thumb || alt} alt={"coin image"} width={30} height={30}/></div>
-                <div className="p-1 text-neutral-500"><Link href={`/coins/${result.id}`}>{result.name}</Link></div>
-                <div className="ml-auto text-neutral-500 text-xs">#{result.market_cap_rank}</div>
-               </li>
+              <li
+                key={result.id}
+                onClick={handleResultItemClick}
+                className="flex items-center p-3"
+              >
+                <div className="p-1">
+                  <Image
+                    src={result.thumb || alt}
+                    alt={"coin image"}
+                    width={30}
+                    height={30}
+                  />
+                </div>
+                <div className="p-1 text-neutral-500">
+                  <Link href={`/coins/${result.id}`}>{result.name}</Link>
+                </div>
+                <div className="ml-auto text-neutral-500 text-xs">
+                  #{result.market_cap_rank}
+                </div>
+              </li>
             ))}
           </ul>
         </div>
-       )}
+      )}
     </div>
   );
 }
-
