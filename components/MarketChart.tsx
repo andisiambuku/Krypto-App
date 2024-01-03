@@ -33,17 +33,21 @@ const MarketChart: React.FC<LineProps> = ({ id }) => {
           `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=30&precision=2&interval=daily`
         );
         const data = await response.json();
-        console.log('chartData:', data)
+        console.log("chartData:", data);
         setChartData(data);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     };
     fetchData();
   }, [id]);
 
-  if (!chartData || !chartData.prices ) {
-    return <div>Loading ...</div>;
+  if (!chartData || !chartData.prices) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full border-4 border-solid border-current border-r-transparent h-12 w-12"></div>
+      </div>
+    );
   }
   const { prices } = chartData;
 
@@ -60,10 +64,10 @@ const MarketChart: React.FC<LineProps> = ({ id }) => {
     ],
   };
 
-  return(
+  return (
     <div>
-        <Line data={data} />
+      <Line data={data} />
     </div>
-  )
+  );
 };
 export default MarketChart;

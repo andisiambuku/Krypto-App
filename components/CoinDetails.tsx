@@ -96,7 +96,7 @@ export async function CoinPage({ promise }: { promise: Promise<CoinDetails> }) {
           </ul>
         </div>
         <div className="py-5">
-         <MarketChart id="ethereum"/>
+         <MarketChart id={details.id}/>
         </div>
       </div>
     </div>
