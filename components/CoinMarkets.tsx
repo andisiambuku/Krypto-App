@@ -45,7 +45,7 @@ export default function Coins({ coin }: Props) {
                   </td>
                   <td className="whitespace-nowrap px-3 py-4">
                     <Image
-                      src={coin.image.small || alt}
+                      src={coin.image || alt}
                       alt={"coin image"}
                       width={30}
                       height={30}
