@@ -14,7 +14,7 @@ export async function CoinPage({ promise }: { promise: Promise<CoinDetails> }) {
         </p>
         <div className="flex items-center flex-wrap">
           <Image
-            src={details.image.small || alt}
+            src={details.symbol || alt}
             alt="coin image"
             width={30}
             height={30}
