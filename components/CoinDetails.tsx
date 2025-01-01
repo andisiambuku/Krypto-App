@@ -5,6 +5,7 @@ import MarketChart from "./MarketChart";
 
 export async function CoinPage({ promise }: { promise: Promise<CoinDetails> }) {
   const details = await promise;
+  // console.log(details.symbol)
 
   const content = (
     <div className="p-5 text-gray-700" key={details.id}>
@@ -14,7 +15,7 @@ export async function CoinPage({ promise }: { promise: Promise<CoinDetails> }) {
         </p>
         <div className="flex items-center flex-wrap">
           <Image
-            src={details.symbol || alt}
+            src={details.image || alt}
             alt="coin image"
             width={30}
             height={30}
